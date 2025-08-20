@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface PatientCardProps {
   patient: {
@@ -26,7 +27,7 @@ export default function PatientCard({ patient }: PatientCardProps) {
         />
         <div>
           <p className="font-medium">{patient.name}</p>
-          <p className="text-sm text-gray-500">ID:{patient.id}</p>
+          <p className="text-sm text-gray-500">ID: #{patient.id}</p>
           <p className="text-sm text-gray-700">
             Description: {patient.description}
           </p>
@@ -43,11 +44,20 @@ export default function PatientCard({ patient }: PatientCardProps) {
 
       {/* Actions */}
       <div className="flex flex-col gap-2">
-        <Button variant="outline" size="sm">Open Chart</Button>
-        <Button className="bg-[#616161] text-white hover:bg-opacity-80" size="sm">
+        <Link href={`/doctor/patients/${patient.id}`} className="block w-full">
+          <Button variant="outline" size="sm">
+            Open Chart
+          </Button>
+        </Link>
+        <Button
+          className="bg-[#616161] text-white hover:bg-opacity-80"
+          size="sm"
+        >
           Start Consultation
         </Button>
-        <Button variant="outline" size="sm">Refer</Button>
+        <Button variant="outline" size="sm">
+          Refer
+        </Button>
       </div>
     </div>
   );
