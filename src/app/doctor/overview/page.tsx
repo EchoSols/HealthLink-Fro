@@ -20,7 +20,9 @@ const Page = () => {
       {/* Status Cards */}
       <div className="flex gap-4">
         {data.map((item, idx) => (
-          <Card key={idx} title={item.title} total={item.total} />
+          <div key={idx} className="flex-1">
+            <Card title={item.title} total={item.total} />
+          </div>
         ))}
       </div>
 
