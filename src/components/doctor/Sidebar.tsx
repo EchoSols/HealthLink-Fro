@@ -32,7 +32,7 @@ const Sidebar = () => {
       {/* Mobile Toggle Button */}
       <button
         onClick={() => setOpen(true)}
-        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-white border rounded-md shadow-md"
+        className="md:hidden fixed z-50 p-2 bg-white border rounded-md shadow-md"
       >
         <Menu className="h-5 w-5" />
       </button>
