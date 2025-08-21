@@ -17,7 +17,6 @@ const Page = () => {
       <h1 className="font-semibold text-2xl">Welcome back, John</h1>
       <p className="text-gray-600">Here&apos;s your health overview for today</p>
 
-      {/* Status Cards */}
       <div className="flex gap-4">
         {data.map((item, idx) => (
           <div key={idx} className="flex-1">
@@ -26,13 +25,11 @@ const Page = () => {
         ))}
       </div>
 
-      {/* Queue + Next in Queue */}
       <div className="flex gap-4">
         <TopQueue />
         <NextInQueue />
       </div>
 
-      {/* Notifications + Calendar */}
       <div className="flex gap-4">
         <RecentNotifications />
         <CalendarCard />

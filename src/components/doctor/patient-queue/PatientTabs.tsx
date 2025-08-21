@@ -5,6 +5,8 @@ import TodayVisitCard from "./TodayVisitCard";
 import ClinicalNotes from "./ClinicalNotes";
 import PrescriptionForm from "./PrescriptionForm";
 import VitalsForm from "./VitalsForm";
+import ClinicalAlerts from "./ClinicalAlerts";
+import Orders from "./Orders";
 
 const tabs = ["Today", "Notes", "Vitals", "Prescriptions", "Orders", "Alerts"];
 
@@ -36,7 +38,9 @@ export default function PatientTabs() {
         {activeTab === "Notes" && <ClinicalNotes />}
         {activeTab === "Prescriptions" && <PrescriptionForm />}
         {activeTab === "Vitals" && <VitalsForm />}
-        {activeTab !== "Today" && activeTab !== "Notes" && activeTab !== "Prescriptions" && activeTab !== "Vitals" && (
+        {activeTab === "Alerts" && <ClinicalAlerts />}
+        {activeTab === "Orders" && <Orders />}
+        {activeTab !== "Today" && activeTab !== "Notes" && activeTab !== "Prescriptions" && activeTab !== "Vitals" && activeTab !== "Alerts" && activeTab !== "Orders" && (
           <p className="text-gray-500 text-sm">No data available</p>
         )}
       </div>

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 const NextInQueue = () => {
   return (
@@ -14,7 +15,7 @@ const NextInQueue = () => {
       <p className="text-sm"><span className="font-semibold">Names: </span>Sarah Johnson</p>
       <p className="text-sm mb-4"><span className="font-semibold">Description: </span>Chest pain and shortness of breath</p>
 
-      <Button className="w-full bg-[#118CDB] text-white">View Details</Button>
+      <Link href={`/doctor/patients/apt23056`}><Button className="w-full bg-[#118CDB] text-white">View Details</Button></Link>
     </div>
   )
 }

@@ -18,12 +18,14 @@ export default function VitalsForm() {
   };
 
   return (
-    <div className="bg-white shadow rounded-lg p-6 max-w-md">
+    <form className="bg-white shadow rounded-lg p-6 max-w-md">
       <h2 className="text-lg font-semibold mb-4">Vital Signs</h2>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Blood Pressure</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Blood Pressure
+          </label>
           <input
             type="text"
             name="bloodPressure"
@@ -35,7 +37,9 @@ export default function VitalsForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Heart rate</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Heart rate
+          </label>
           <input
             type="text"
             name="heartRate"
@@ -47,7 +51,9 @@ export default function VitalsForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Temperature</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Temperature
+          </label>
           <input
             type="text"
             name="temperature"
@@ -59,7 +65,9 @@ export default function VitalsForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">SpO₂</label>
+          <label className="block text-sm font-medium text-gray-700">
+            SpO₂
+          </label>
           <input
             type="text"
             name="spO2"
@@ -71,7 +79,9 @@ export default function VitalsForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Weight</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Weight
+          </label>
           <input
             type="text"
             name="weight"
@@ -83,7 +93,9 @@ export default function VitalsForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Height</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Height
+          </label>
           <input
             type="text"
             name="height"
@@ -93,7 +105,13 @@ export default function VitalsForm() {
             className="mt-1 w-full rounded border px-3 py-2 text-sm"
           />
         </div>
+        <button
+          type="submit"
+          className="mt-4 w-full bg-blue-600 text-white py-2 rounded"
+        >
+          Save
+        </button>
       </div>
-    </div>
+    </form>
   );
 }

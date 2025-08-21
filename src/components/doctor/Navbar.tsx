@@ -16,9 +16,7 @@ import {
 const Navbar = () => {
   return (
     <div className="fixed top-0 left-0 w-full shadow-sm px-4 py-3 bg-white flex items-center justify-between z-30">
-      {/* Left side */}
-      <div className="flex gap-3 items-center">
-        {/* Logo + title */}
+      <div className="flex gap-11 items-center">
         <div className="flex items-center gap-2">
           <Image src="/logo.svg" alt="Logo" width={35} height={35} />
           <div className="hidden sm:block">
@@ -29,7 +27,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Search (hidden on small screens) */}
         <div className="hidden md:block">
           <Input
             type="text"
@@ -39,13 +36,10 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Right side */}
       <div className="flex items-center gap-3">
         <div className="flex items-center space-x-2">
-          {/* The small translate-like icon */}
           <span className="text-lg font-bold">ᶾᴀ</span>
 
-          {/* Language Select */}
           <Select defaultValue="en">
             <SelectTrigger className="w-[100px] border-none shadow-none px-0 focus:ring-0 focus:outline-none">
               <SelectValue placeholder="English" />
@@ -59,10 +53,8 @@ const Navbar = () => {
           </Select>
         </div>
 
-        {/* Notification */}
         <BellDotIcon className="h-5 w-5" />
 
-        {/* Avatar */}
         <Avatar>
           <AvatarFallback className="flex items-center justify-center bg-[#118CDB] text-white font-semibold">
             I
