@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 type Payment = {
   name: string;
   id: string;
@@ -44,11 +46,12 @@ export default function PaymentList({ data }: { data?: Payment[] }) {
           key={i}
           className="flex items-center justify-between border rounded-lg p-4 bg-white shadow-sm"
         >
-          {/* Left - patient info */}
           <div className="flex items-center gap-4">
-            <img
-              src={p.avatar}
+            <Image
+              src={p.avatar || ""}
               alt={p.name}
+              width={48}
+              height={48}
               className="w-12 h-12 rounded-full border"
             />
             <div>
@@ -62,7 +65,6 @@ export default function PaymentList({ data }: { data?: Payment[] }) {
             </div>
           </div>
 
-          {/* Right - amount + button */}
           <div className="text-right">
             <p className="text-lg font-semibold">{p.amount}</p>
             <p className="text-sm text-gray-500">{p.method}</p>
