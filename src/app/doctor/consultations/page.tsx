@@ -1,11 +1,23 @@
-import React from 'react'
+"use client";
 
-const page = () => {
+import ConsultationStats from "@/components/doctor/consultations/ConsultationStats";
+import ConsultationTable from "@/components/doctor/consultations/ConsultationTable";
+
+export default function ConsultationsPage() {
   return (
-    <div>
-      
-    </div>
-  )
-}
+    <div className="p-6">
+      <h1 className="text-xl font-semibold">Consultation history</h1>
+      <p className="text-gray-500 text-sm mb-6">
+        View and manage your consultation records
+      </p>
 
-export default page
+      {/* Stats cards */}
+      <ConsultationStats />
+
+      {/* Table */}
+      <div className="mt-6">
+        <ConsultationTable />
+      </div>
+    </div>
+  );
+}
