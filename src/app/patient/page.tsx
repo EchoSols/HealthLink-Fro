@@ -4,6 +4,19 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Bell } from "lucide-react";
 
+// SEO metadata for this page
+export const metadata = {
+  title: "Patient Dashboard",
+  description:
+    "Access your health overview, recent visits, upcoming appointments, and manage your healthcare journey.",
+  keywords: [
+    "patient dashboard",
+    "health overview",
+    "medical appointments",
+    "healthcare management",
+  ],
+};
+
 const summaryCards = [
   {
     title: "Current Queue Status",
@@ -50,36 +63,41 @@ const recentVisits = [
 export default function PatientPage() {
   return (
     <div className="w-full space-y-6">
-      <div>
+      <header>
         <h1 className="font-semibold text-2xl">Welcome back, John</h1>
         <p className="text-gray-600">Here's your health overview for today</p>
-      </div>
+      </header>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {summaryCards.map((card, idx) => (
-          <div key={idx} className="bg-white rounded-lg border shadow-sm">
-            <div className="p-4 border-l-4 border-[#118CDB] rounded-lg">
-              <h3 className="font-medium text-sm text-gray-700">
-                {card.title}
-              </h3>
-              <p className="text-sm font-semibold mt-1">{card.subtitle}</p>
-              <p className="text-xs text-gray-500 mt-1">{card.detail}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+      <section aria-label="Health Summary">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {summaryCards.map((card, idx) => (
+            <article key={idx} className="bg-white rounded-lg border shadow-sm">
+              <div className="p-4 border-l-4 border-[#118CDB] rounded-lg">
+                <h2 className="font-medium text-sm text-gray-700">
+                  {card.title}
+                </h2>
+                <p className="text-sm font-semibold mt-1">{card.subtitle}</p>
+                <p className="text-xs text-gray-500 mt-1">{card.detail}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Visits */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-lg border p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-4">
+        <section
+          className="lg:col-span-2 space-y-6"
+          aria-label="Recent Healthcare Activity"
+        >
+          <article className="bg-white rounded-lg border p-6 shadow-sm">
+            <header className="flex items-center justify-between mb-4">
               <h2 className="font-semibold text-lg">Recent Visits</h2>
               <button className="text-sm text-[#118CDB] hover:underline">
                 View more
               </button>
-            </div>
+            </header>
             <p className="text-sm text-gray-600 mb-4">
               Here are your recent healthcare visits.
             </p>
@@ -116,34 +134,34 @@ export default function PatientPage() {
                 </div>
               ))}
             </div>
-          </div>
+          </article>
 
           {/* Recent Medications */}
-          <div className="bg-white rounded-lg border p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-4">
+          <article className="bg-white rounded-lg border p-6 shadow-sm">
+            <header className="flex items-center justify-between mb-4">
               <h2 className="font-semibold text-lg">Recent medications</h2>
               <button className="text-sm text-[#118CDB] hover:underline">
                 View more
               </button>
-            </div>
+            </header>
             <p className="text-sm text-gray-600">
               Here are your recent medications.
             </p>
             <div className="mt-4 text-center text-gray-500 py-8">
               <p>No medications found</p>
             </div>
-          </div>
-        </div>
+          </article>
+        </section>
 
         {/* Right Column */}
-        <div className="space-y-6">
+        <aside className="space-y-6" aria-label="Quick Actions">
           {/* Upcoming Appointment */}
-          <div className="bg-white rounded-lg border p-6 shadow-sm">
+          <article className="bg-white rounded-lg border p-6 shadow-sm">
             <h2 className="font-semibold text-lg mb-4">Upcoming appointment</h2>
             <div className="space-y-3">
               <div className="flex justify-between items-start">
                 <h3 className="font-medium">Kigali Hospital</h3>
-                <span className="text-sm text-gray-500">2025-07-9</span>
+                <time className="text-sm text-gray-500">2025-07-9</time>
               </div>
               <div className="text-sm text-gray-600">
                 <p>Department: Cardiology</p>
@@ -153,19 +171,19 @@ export default function PatientPage() {
                 Create new appointment
               </Button>
             </div>
-          </div>
+          </article>
 
           {/* Notifications */}
-          <div className="bg-white rounded-lg border p-6 shadow-sm">
-            <div className="flex items-center gap-2 mb-4">
-              <Bell className="h-5 w-5" />
+          <article className="bg-white rounded-lg border p-6 shadow-sm">
+            <header className="flex items-center gap-2 mb-4">
+              <Bell className="h-5 w-5" aria-hidden="true" />
               <h2 className="font-semibold text-lg">Notifications</h2>
-            </div>
+            </header>
             <div className="text-center text-gray-500 py-8">
               <p>No notifications</p>
             </div>
-          </div>
-        </div>
+          </article>
+        </aside>
       </div>
     </div>
   );
