@@ -27,7 +27,7 @@ const PatientSidebar = ({ isCollapsed = false }: PatientSidebarProps) => {
     { label: "Overview", href: "/patient/dashboard", icon: LayoutDashboard },
     {
       label: "Visit Details",
-      href: "/patient/visits",
+      href: "/patient/visits/create",
       icon: Calendar,
       hasDropdown: true,
     },
@@ -56,7 +56,7 @@ const PatientSidebar = ({ isCollapsed = false }: PatientSidebarProps) => {
         } ${
           open
             ? "fixed inset-y-0 left-0 h-screen"
-            : "relative h-full hidden md:flex"
+            : "relative h-[calc(100vh-80px)] hidden md:flex"
         }`}
       >
         <div>
@@ -146,7 +146,8 @@ const PatientSidebar = ({ isCollapsed = false }: PatientSidebarProps) => {
             onClick={() => setOpen(false)}
             className={`flex items-center gap-3 text-sm text-gray-700 hover:bg-gray-100 px-2 py-2 rounded-md mt-2 ${
               isCollapsed ? "justify-center" : ""
-            }`}
+            }
+            `}
           >
             <LogOut className="h-4 w-4 flex-shrink-0" />
             {!isCollapsed && "Logout"}
