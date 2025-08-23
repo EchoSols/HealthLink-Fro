@@ -1,12 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Calendar, Clock, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Navbar from "@/components/doctor/Navbar";
 import PatientSidebar from "@/components/patient/PatientSidebar";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -14,39 +12,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-
-interface Invoice {
-  id: string;
-  hospital: string;
-  doctor: string;
-  serviceDate: string;
-  dueDate: string;
-  amount: string;
-  status: "pending" | "overdue";
-  serviceType: string;
-}
-
-interface Transaction {
-  id: string;
-  date: string;
-  description: string;
-  subDescription: string;
-  method: string;
-  reference: string;
-  amount: string;
-  status: "completed" | "failed";
-  type: "credit" | "debit";
-}
+import { InvoiceCard } from "@/components/patient/payments/InvoiceCard";
+import { TransactionsTable } from "@/components/patient/payments/TransactionsTable";
+import { WalletTab } from "@/components/patient/payments/WalletTab";
+import { MethodsTab } from "@/components/patient/payments/MethodsTab";
+import { Invoice, Transaction } from "@/components/patient/payments/types";
 
 const PaymentsPage = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -171,268 +141,6 @@ const PaymentsPage = () => {
     console.log(`Processing payment for invoice ${invoiceId}`);
   };
 
-  const InvoiceCard = ({ invoice }: { invoice: Invoice }) => (
-    <div className="bg-white rounded-lg border p-6 shadow-sm">
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-        <div className="flex-1">
-          <div className="mb-3">
-            <h3 className="font-semibold text-gray-900 text-lg mb-1">
-              {invoice.serviceType}
-            </h3>
-            <p className="text-gray-600 text-sm">
-              {invoice.hospital} • {invoice.doctor}
-            </p>
-          </div>
-
-          <div className="space-y-2 text-sm text-gray-600">
-            <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4" />
-              <span>Service Date: {invoice.serviceDate}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4" />
-              <span>Due: {invoice.dueDate}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Badge
-                className={`${
-                  invoice.status === "overdue"
-                    ? "bg-red-100 text-red-800 border-red-200"
-                    : "bg-blue-100 text-blue-800 border-blue-200"
-                } px-3 py-1 rounded-full text-sm font-medium w-fit`}
-              >
-                {invoice.status === "overdue" ? "Overdue" : "pending"}
-              </Badge>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col items-end gap-3">
-          <div className="text-right">
-            <p className="text-2xl font-bold text-gray-900">{invoice.amount}</p>
-          </div>
-          <Button
-            onClick={() => handlePayNow(invoice.id)}
-            className={`${
-              invoice.status === "overdue"
-                ? "bg-red-600 hover:bg-red-700 text-white"
-                : "bg-blue-600 hover:bg-blue-700 text-white"
-            } px-6 py-2 rounded-md font-medium`}
-          >
-            Pay now
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-
-  const TransactionsTable = () => (
-    <div className="bg-white rounded-lg border shadow-sm">
-      <div className="overflow-x-auto">
-        <Table className="min-w-[800px]">
-          <TableHeader>
-            <TableRow className="bg-gray-50">
-              <TableHead className="font-semibold text-gray-900">
-                Date
-              </TableHead>
-              <TableHead className="font-semibold text-gray-900">
-                Description
-              </TableHead>
-              <TableHead className="font-semibold text-gray-900">
-                Method
-              </TableHead>
-              <TableHead className="font-semibold text-gray-900">
-                Reference
-              </TableHead>
-              <TableHead className="font-semibold text-gray-900">
-                Amount
-              </TableHead>
-              <TableHead className="font-semibold text-gray-900">
-                Status
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {transactions.map((transaction) => (
-              <TableRow key={transaction.id} className="hover:bg-gray-50">
-                <TableCell className="text-sm text-gray-600">
-                  {transaction.date}
-                </TableCell>
-                <TableCell className="text-sm text-gray-900 font-medium">
-                  <div className="flex flex-col">
-                    <span
-                      className="font-bold truncate max-w-[200px]"
-                      title={transaction.description}
-                    >
-                      {transaction.description}
-                    </span>
-                    <span className="text-gray-600 text-xs">
-                      {transaction.subDescription}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell className="text-sm text-gray-600">
-                  {transaction.method}
-                </TableCell>
-                <TableCell className="text-sm text-gray-600 font-mono">
-                  {transaction.reference}
-                </TableCell>
-                <TableCell className="text-sm font-medium">
-                  <span
-                    className={
-                      transaction.type === "credit"
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }
-                  >
-                    {transaction.amount}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <Badge
-                    variant={
-                      transaction.status === "failed"
-                        ? "destructive"
-                        : "secondary"
-                    }
-                    className={`${
-                      transaction.status === "failed"
-                        ? "bg-red-100 text-red-800 border-red-200"
-                        : "bg-green-100 text-green-800 border-green-200"
-                    } px-3 py-1 rounded-full text-sm font-medium`}
-                  >
-                    {transaction.status}
-                  </Badge>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-    </div>
-  );
-
-  const WalletTab = () => (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-semibold text-gray-900">
-          Wallet Management
-        </h2>
-        <p className="text-gray-600 mt-2">
-          Manage your wallet balance and transactions
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Top-up wallet card */}
-        <div className="bg-white rounded-lg border p-6 shadow-sm">
-          <div className="space-y-4">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900">
-                Top-up wallet
-              </h3>
-              <p className="text-gray-600 text-sm">Add money to your wallet</p>
-            </div>
-
-            <div className="space-y-3">
-              <div>
-                <Label
-                  htmlFor="topup-amount"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Amount (RWF)
-                </Label>
-                <Input
-                  id="topup-amount"
-                  type="text"
-                  placeholder="Enter amount"
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <Label
-                  htmlFor="topup-method"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Payment method
-                </Label>
-                <Select>
-                  <SelectTrigger className="mt-1">
-                    <SelectValue placeholder="Select payment method" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="mtn">MTN mobile money</SelectItem>
-                    <SelectItem value="airtel">Airtel money</SelectItem>
-                    <SelectItem value="bank">Bank transfer</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                Top Up
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Withdraw funds card */}
-        <div className="bg-white rounded-lg border p-6 shadow-sm">
-          <div className="space-y-4">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900">
-                Withdraw funds
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Transfer money from your wallet
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              <div>
-                <Label
-                  htmlFor="withdraw-amount"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Amount (RWF)
-                </Label>
-                <Input
-                  id="withdraw-amount"
-                  type="text"
-                  placeholder="Enter amount"
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <Label
-                  htmlFor="withdraw-method"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Payment method
-                </Label>
-                <Select>
-                  <SelectTrigger className="mt-1">
-                    <SelectValue placeholder="Select payment method" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="mtn">MTN mobile money</SelectItem>
-                    <SelectItem value="airtel">Airtel money</SelectItem>
-                    <SelectItem value="bank">Bank transfer</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                Withdraw
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
   const renderTabContent = () => {
     switch (selectedTab) {
       case "pay-now":
@@ -449,7 +157,11 @@ const PaymentsPage = () => {
 
             <div className="space-y-4">
               {pendingInvoices.map((invoice) => (
-                <InvoiceCard key={invoice.id} invoice={invoice} />
+                <InvoiceCard
+                  key={invoice.id}
+                  invoice={invoice}
+                  onPayNow={handlePayNow}
+                />
               ))}
             </div>
           </div>
@@ -461,22 +173,18 @@ const PaymentsPage = () => {
               <h2 className="text-xl font-semibold text-gray-900">
                 Transaction History
               </h2>
-              <p className="text-gray-600 mt-1">
+              <p className="text-gray-600 mt-2">
                 View all your payment transactions
               </p>
             </div>
 
-            <TransactionsTable />
+            <TransactionsTable transactions={transactions} />
           </div>
         );
       case "wallet":
         return <WalletTab />;
       case "methods":
-        return (
-          <div className="text-center py-8">
-            <p className="text-gray-500">Methods tab - Coming soon</p>
-          </div>
-        );
+        return <MethodsTab />;
       default:
         return null;
     }
@@ -580,7 +288,11 @@ const PaymentsPage = () => {
 
                 <div className="space-y-6">
                   {pendingInvoices.map((invoice) => (
-                    <InvoiceCard key={invoice.id} invoice={invoice} />
+                    <InvoiceCard
+                      key={invoice.id}
+                      invoice={invoice}
+                      onPayNow={handlePayNow}
+                    />
                   ))}
                 </div>
               </div>
@@ -597,7 +309,7 @@ const PaymentsPage = () => {
                   </p>
                 </div>
 
-                <TransactionsTable />
+                <TransactionsTable transactions={transactions} />
               </div>
             </TabsContent>
 
@@ -606,11 +318,7 @@ const PaymentsPage = () => {
             </TabsContent>
 
             <TabsContent value="methods" className="mt-8">
-              <div className="text-center py-12">
-                <p className="text-gray-500 text-lg">
-                  Methods tab - Coming soon
-                </p>
-              </div>
+              <MethodsTab />
             </TabsContent>
           </Tabs>
         </div>
