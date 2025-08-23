@@ -4,67 +4,109 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, ArrowRight } from "lucide-react";
-import Link from "next/link";
-import Navbar from "@/components/doctor/Navbar";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import "react-phone-number-input/style.css";
+
+interface FormData {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+}
 
 export default function PatientLoginPage() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
+    rememberMe: false,
   });
-  const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (
+    field: keyof FormData,
+    value: string | boolean
+  ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login attempt:", formData);
-  };
-
-  const handleGoogleSignIn = () => {
-    console.log("Google sign-in clicked");
+    console.log("Form submitted:", formData);
+    window.location.href = "/patient/dashboard";
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
+    <div className="min-h-screen flex">
+      <div className="hidden lg:flex lg:w-[30%] bg-blue-600 flex-col justify-between p-8">
+        <div className="flex items-center space-x-2">
+          <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
+            <Image
+              src="/logo.svg"
+              alt="HealthLink Logo"
+              width={24}
+              height={24}
+              className="object-contain"
+            />
+          </div>
+          <span className="text-white text-xl font-semibold">HealthLink</span>
+        </div>
 
-      <div className="pt-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            Sign in to your account.
+        <div className="flex-1 flex flex-col justify-center items-center text-center">
+          <h1 className="text-3xl font-bold text-white mb-4 leading-tight">
+            Welcome back! Log in to stay in control of your health.
           </h1>
-          <p className="text-gray-600 text-lg">
-            Manage appointments, access records, and stay healthy — all in one
+          <p className="text-blue-100 text-lg leading-relaxed">
+            Manage appointments, access records, and stay healthy – all in one
             secure place.
           </p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border p-8 max-w-md mx-auto">
-          <Button
-            onClick={handleGoogleSignIn}
-            variant="outline"
-            className="w-full bg-white hover:bg-gray-50 text-gray-700 border-gray-300 py-3 px-4 mb-6"
-          >
-            <div className="flex items-center justify-center space-x-3">
-              <div className="w-5 h-5 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                G
-              </div>
-              <span className="font-medium">Sign In with Google</span>
-            </div>
-          </Button>
+        <div className="flex items-end justify-between">
+          <div className="relative">
+            <Image
+              src="/patients/boxImage.png"
+              alt="First Aid Kit"
+              width={100}
+              height={100}
+              className="object-contain"
+            />
+          </div>
 
-          <div className="relative mb-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300" />
+          <div className="relative">
+            <Image
+              src="/patients/doctorImage.png"
+              alt="Doctor"
+              width={180}
+              height={180}
+              className="object-contain"
+            />
+          </div>
+
+          <div className="relative">
+            <Image
+              src="/patients/doctorTool.png"
+              alt="Stethoscope"
+              width={90}
+              height={90}
+              className="object-contain"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="flex-1 lg:w-[70%] bg-white p-6 lg:p-12 flex items-center justify-center">
+        <div className="w-full max-w-lg">
+          <div className="flex items-center justify-center space-x-4 mb-8">
+            <div className="w-3 h-3 bg-gray-300 rounded-full border-2 border-gray-300"></div>
+            <div className="w-16 h-0.5 bg-blue-600"></div>
+            <div className="w-3 h-3 bg-blue-600 rounded-full border-2 border-blue-600 relative">
+              <div className="w-1.5 h-1.5 bg-white rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">OR</span>
-            </div>
+          </div>
+
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900">
+              Get To DashBoard!
+            </h2>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -73,16 +115,15 @@ export default function PatientLoginPage() {
                 htmlFor="email"
                 className="text-sm font-medium text-gray-700"
               >
-                Email Address
+                Email
               </Label>
               <Input
                 id="email"
                 type="email"
                 value={formData.email}
                 onChange={(e) => handleInputChange("email", e.target.value)}
-                placeholder="Enter your email address"
-                className="mt-1"
-                required
+                placeholder="example@gmail.com"
+                className="mt-1 w-full"
               />
             </div>
 
@@ -93,67 +134,60 @@ export default function PatientLoginPage() {
               >
                 Password
               </Label>
-              <div className="relative mt-1">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  value={formData.password}
-                  onChange={(e) =>
-                    handleInputChange("password", e.target.value)
-                  }
-                  placeholder="Enter your password"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4 text-gray-400" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-gray-400" />
-                  )}
-                </button>
-              </div>
+              <Input
+                id="password"
+                type="password"
+                value={formData.password}
+                onChange={(e) => handleInputChange("password", e.target.value)}
+                placeholder="••••••••"
+                className="mt-1 w-full"
+              />
             </div>
 
             <div className="flex items-center justify-between">
-              <label className="flex items-center">
+              <div className="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  id="rememberMe"
+                  checked={formData.rememberMe}
+                  onChange={(e) =>
+                    handleInputChange("rememberMe", e.target.checked)
+                  }
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 />
-                <span className="ml-2 text-sm text-gray-600">Remember me</span>
-              </label>
-              <Link
+                <Label
+                  htmlFor="rememberMe"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Remember me
+                </Label>
+              </div>
+              <a
                 href="/patient/auth/forgot-password"
-                className="text-sm text-blue-600 hover:text-blue-700"
+                className="text-blue-600 hover:text-blue-700 text-sm font-medium"
               >
                 Forgot password?
-              </Link>
+              </a>
             </div>
 
             <Button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4"
+              className="w-full cursor-pointer bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold"
             >
-              <span className="mr-2">Signin</span>
-              <ArrowRight className="h-4 w-4" />
+              LOGIN
+              <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </form>
 
-          <div className="text-center mt-6 pt-6 border-t">
+          <div className="text-center mt-8">
             <p className="text-gray-600">
               Don&apos;t have an account?{" "}
-              <Link
+              <a
                 href="/patient/auth/register"
                 className="text-blue-600 hover:text-blue-700 font-medium"
               >
-                Register
-              </Link>
+                Sign Up
+              </a>
             </p>
           </div>
         </div>
