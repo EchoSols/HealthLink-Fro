@@ -45,6 +45,7 @@ export default function PatientRegistrationPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+    window.location.href = "/patient/auth/login";
   };
 
   return (
@@ -304,7 +305,7 @@ export default function PatientRegistrationPage() {
             {/* Submit Button */}
             <Button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold"
+              className="w-full cursor-pointer bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold"
             >
               GET STARTED
               <ArrowRight className="ml-2 w-5 h-5" />
