@@ -22,7 +22,7 @@ const payments: Payment[] = [
     status: "Completed",
     amount: "150 000 rwf",
     method: "Mobile money",
-    avatar: "https://i.pravatar.cc/50?img=32",
+    avatar: "/man.png",
   },
   {
     name: "Sarah Sanyukaa",
@@ -32,7 +32,7 @@ const payments: Payment[] = [
     status: "Completed",
     amount: "150 000 rwf",
     method: "Mobile money",
-    avatar: "https://i.pravatar.cc/50?img=35",
+    avatar: "/man.png",
   },
 ];
 
