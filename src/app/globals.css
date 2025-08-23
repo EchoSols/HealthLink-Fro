@@ -119,3 +119,17 @@
     @apply bg-white text-foreground font-poppins;
   }
 }
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.PhoneInput {
+  @apply w-full;
+}
