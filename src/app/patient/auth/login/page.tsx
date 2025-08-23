@@ -23,6 +23,7 @@ export default function PatientLoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Login attempt:", formData);
+    window.location.href = "/patient/dashboard";
   };
 
   const handleGoogleSignIn = () => {
