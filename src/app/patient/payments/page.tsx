@@ -14,6 +14,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface Invoice {
   id: string;
@@ -24,6 +32,18 @@ interface Invoice {
   amount: string;
   status: "pending" | "overdue";
   serviceType: string;
+}
+
+interface Transaction {
+  id: string;
+  date: string;
+  description: string;
+  subDescription: string;
+  method: string;
+  reference: string;
+  amount: string;
+  status: "completed" | "failed";
+  type: "credit" | "debit";
 }
 
 const PaymentsPage = () => {
@@ -71,6 +91,75 @@ const PaymentsPage = () => {
       amount: "150 000 rwf",
       status: "pending",
       serviceType: "General Consultation",
+    },
+  ];
+
+  const transactions: Transaction[] = [
+    {
+      id: "1",
+      date: "2020-04-5",
+      description: "Wallet Topup",
+      subDescription: "Increase",
+      method: "MTN mobile money",
+      reference: "#REF123456789",
+      amount: "+150 000 frw",
+      status: "completed",
+      type: "credit",
+    },
+    {
+      id: "2",
+      date: "2020-04-5",
+      description: "King Faisal",
+      subDescription: "Dr John Doe",
+      method: "MTN mobile money",
+      reference: "#REF123456789",
+      amount: "-150 000 frw",
+      status: "completed",
+      type: "debit",
+    },
+    {
+      id: "3",
+      date: "2020-04-5",
+      description: "Wallet Topup",
+      subDescription: "Increase",
+      method: "MTN mobile money",
+      reference: "#REF123456789",
+      amount: "+150 000 frw",
+      status: "failed",
+      type: "credit",
+    },
+    {
+      id: "4",
+      date: "2020-04-5",
+      description: "Wallet Topup",
+      subDescription: "Increase",
+      method: "MTN mobile money",
+      reference: "#REF123456789",
+      amount: "+150 000 frw",
+      status: "completed",
+      type: "credit",
+    },
+    {
+      id: "5",
+      date: "2020-04-5",
+      description: "King Faisal",
+      subDescription: "Dr John Doe",
+      method: "MTN mobile money",
+      reference: "#REF123456789",
+      amount: "-150 000 frw",
+      status: "completed",
+      type: "debit",
+    },
+    {
+      id: "6",
+      date: "2020-04-5",
+      description: "Wallet Topup",
+      subDescription: "Increase",
+      method: "MTN mobile money",
+      reference: "#REF123456789",
+      amount: "+150 000 frw",
+      status: "completed",
+      type: "credit",
     },
   ];
 
@@ -135,6 +224,92 @@ const PaymentsPage = () => {
     </div>
   );
 
+  const TransactionsTable = () => (
+    <div className="bg-white rounded-lg border shadow-sm">
+      <div className="overflow-x-auto">
+        <Table className="min-w-[800px]">
+          <TableHeader>
+            <TableRow className="bg-gray-50">
+              <TableHead className="font-semibold text-gray-900">
+                Date
+              </TableHead>
+              <TableHead className="font-semibold text-gray-900">
+                Description
+              </TableHead>
+              <TableHead className="font-semibold text-gray-900">
+                Method
+              </TableHead>
+              <TableHead className="font-semibold text-gray-900">
+                Reference
+              </TableHead>
+              <TableHead className="font-semibold text-gray-900">
+                Amount
+              </TableHead>
+              <TableHead className="font-semibold text-gray-900">
+                Status
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {transactions.map((transaction) => (
+              <TableRow key={transaction.id} className="hover:bg-gray-50">
+                <TableCell className="text-sm text-gray-600">
+                  {transaction.date}
+                </TableCell>
+                <TableCell className="text-sm text-gray-900 font-medium">
+                  <div className="flex flex-col">
+                    <span
+                      className="font-bold truncate max-w-[200px]"
+                      title={transaction.description}
+                    >
+                      {transaction.description}
+                    </span>
+                    <span className="text-gray-600 text-xs">
+                      {transaction.subDescription}
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell className="text-sm text-gray-600">
+                  {transaction.method}
+                </TableCell>
+                <TableCell className="text-sm text-gray-600 font-mono">
+                  {transaction.reference}
+                </TableCell>
+                <TableCell className="text-sm font-medium">
+                  <span
+                    className={
+                      transaction.type === "credit"
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }
+                  >
+                    {transaction.amount}
+                  </span>
+                </TableCell>
+                <TableCell>
+                  <Badge
+                    variant={
+                      transaction.status === "failed"
+                        ? "destructive"
+                        : "secondary"
+                    }
+                    className={`${
+                      transaction.status === "failed"
+                        ? "bg-red-100 text-red-800 border-red-200"
+                        : "bg-green-100 text-green-800 border-green-200"
+                    } px-3 py-1 rounded-full text-sm font-medium`}
+                  >
+                    {transaction.status}
+                  </Badge>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
+
   const renderTabContent = () => {
     switch (selectedTab) {
       case "pay-now":
@@ -158,8 +333,17 @@ const PaymentsPage = () => {
         );
       case "transactions":
         return (
-          <div className="text-center py-8">
-            <p className="text-gray-500">Transactions tab - Coming soon</p>
+          <div className="space-y-4">
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900">
+                Transaction History
+              </h2>
+              <p className="text-gray-600 mt-1">
+                View all your payment transactions
+              </p>
+            </div>
+
+            <TransactionsTable />
           </div>
         );
       case "wallet":
@@ -284,10 +468,17 @@ const PaymentsPage = () => {
             </TabsContent>
 
             <TabsContent value="transactions" className="mt-8">
-              <div className="text-center py-12">
-                <p className="text-gray-500 text-lg">
-                  Transactions tab - Coming soon
-                </p>
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-2xl font-semibold text-gray-900">
+                    Transaction History
+                  </h2>
+                  <p className="text-gray-600 mt-2">
+                    View all your payment transactions
+                  </p>
+                </div>
+
+                <TransactionsTable />
               </div>
             </TabsContent>
 
