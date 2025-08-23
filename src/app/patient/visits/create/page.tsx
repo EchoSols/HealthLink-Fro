@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Navbar from "@/components/doctor/Navbar";
 import PatientSidebar from "@/components/patient/PatientSidebar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -16,7 +15,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import {
   Calendar as CalendarIcon,
-  Search,
   HelpCircle,
   Clipboard,
   FileText,
