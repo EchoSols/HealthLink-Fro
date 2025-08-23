@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import "react-phone-number-input/style.css";
+import { redirect } from "next/navigation";
 
 interface FormData {
   email: string;
@@ -30,12 +30,41 @@ export default function PatientLoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     console.log("Form submitted:", formData);
-    window.location.href = "/patient/dashboard";
+
+    const users: Record<
+      string,
+      { password: string; redirect: string }
+    > = {
+      "james@gmail.com": {
+        password: "James12345",
+        redirect: "/patient/dashboard",
+      },
+      "jane@gmail.com": {
+        password: "Jane12345",
+        redirect: "/doctor/overview",
+      },
+      "manager@gmail.com": {
+        password: "Manager12345",
+        redirect: "/manager",
+      },
+    };
+
+    const user = users[formData.email.trim().toLowerCase()];
+
+    if (user && user.password === formData.password) {
+      // ✅ safer redirect in Next.js
+      // window.location.assign(user.redirect);
+      redirect(user.redirect);
+    } else {
+      alert("Invalid email or password");
+    }
   };
 
   return (
     <div className="min-h-screen flex">
+      {/* Left Panel */}
       <div className="hidden lg:flex lg:w-[30%] bg-blue-600 flex-col justify-between p-8">
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
@@ -61,38 +90,31 @@ export default function PatientLoginPage() {
         </div>
 
         <div className="flex items-end justify-between">
-          <div className="relative">
-            <Image
-              src="/patients/boxImage.png"
-              alt="First Aid Kit"
-              width={100}
-              height={100}
-              className="object-contain"
-            />
-          </div>
-
-          <div className="relative">
-            <Image
-              src="/patients/doctorImage.png"
-              alt="Doctor"
-              width={180}
-              height={180}
-              className="object-contain"
-            />
-          </div>
-
-          <div className="relative">
-            <Image
-              src="/patients/doctorTool.png"
-              alt="Stethoscope"
-              width={90}
-              height={90}
-              className="object-contain"
-            />
-          </div>
+          <Image
+            src="/patients/boxImage.png"
+            alt="First Aid Kit"
+            width={100}
+            height={100}
+            className="object-contain"
+          />
+          <Image
+            src="/patients/doctorImage.png"
+            alt="Doctor"
+            width={180}
+            height={180}
+            className="object-contain"
+          />
+          <Image
+            src="/patients/doctorTool.png"
+            alt="Stethoscope"
+            width={90}
+            height={90}
+            className="object-contain"
+          />
         </div>
       </div>
 
+      {/* Right Panel */}
       <div className="flex-1 lg:w-[70%] bg-white p-6 lg:p-12 flex items-center justify-center">
         <div className="w-full max-w-lg">
           <div className="flex items-center justify-center space-x-4 mb-8">
@@ -110,11 +132,9 @@ export default function PatientLoginPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Email */}
             <div>
-              <Label
-                htmlFor="email"
-                className="text-sm font-medium text-gray-700"
-              >
+              <Label htmlFor="email" className="text-sm font-medium text-gray-700">
                 Email
               </Label>
               <Input
@@ -124,14 +144,13 @@ export default function PatientLoginPage() {
                 onChange={(e) => handleInputChange("email", e.target.value)}
                 placeholder="example@gmail.com"
                 className="mt-1 w-full"
+                required
               />
             </div>
 
+            {/* Password */}
             <div>
-              <Label
-                htmlFor="password"
-                className="text-sm font-medium text-gray-700"
-              >
+              <Label htmlFor="password" className="text-sm font-medium text-gray-700">
                 Password
               </Label>
               <Input
@@ -141,24 +160,21 @@ export default function PatientLoginPage() {
                 onChange={(e) => handleInputChange("password", e.target.value)}
                 placeholder="••••••••"
                 className="mt-1 w-full"
+                required
               />
             </div>
 
+            {/* Remember me */}
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <input
                   type="checkbox"
                   id="rememberMe"
                   checked={formData.rememberMe}
-                  onChange={(e) =>
-                    handleInputChange("rememberMe", e.target.checked)
-                  }
+                  onChange={(e) => handleInputChange("rememberMe", e.target.checked)}
                   className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 />
-                <Label
-                  htmlFor="rememberMe"
-                  className="text-sm font-medium text-gray-700"
-                >
+                <Label htmlFor="rememberMe" className="text-sm font-medium text-gray-700">
                   Remember me
                 </Label>
               </div>
