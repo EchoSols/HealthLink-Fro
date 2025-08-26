@@ -1,6 +1,7 @@
 "use client";
 
 import { Download } from "lucide-react";
+import * as XLSX from "xlsx";
 
 const consultations = [
   {
@@ -23,18 +24,29 @@ const consultations = [
     status: "completed",
     cost: "150 000 rwf",
   },
-  // repeat or fetch dynamically
 ];
 
 export default function ConsultationTable() {
+  const handleExport = () => {
+    const worksheet = XLSX.utils.json_to_sheet(consultations);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Consultations");
+    XLSX.writeFile(workbook, "consultations.xlsx");
+  };
+
   return (
     <div className="bg-white shadow rounded-lg border p-4">
       <div className="flex justify-end mb-4">
-        <button className="px-4 py-2 text-sm border rounded hover:bg-gray-50">
-          Export Data
+        <button
+          onClick={handleExport}
+          className="flex items-center gap-2 px-4 py-2 text-sm border rounded hover:bg-gray-50"
+        >
+          <Download className="w-4 h-4" />
+          Export to Excel
         </button>
       </div>
 
+      {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b">
