@@ -3,7 +3,7 @@ import PageHeader from "@/components/manager/staff/PageHeader";
 import StaffList from "@/components/manager/staff/StaffList";
 import StaffTabs from "@/components/manager/staff/StaffTabs";
 import StatsCards from "@/components/manager/staff/StatsCard";
-
+import AddUserModal from "@/components/modals/AddUserModal";
 
 export default function StaffPage() {
   const stats = [
@@ -18,8 +18,9 @@ export default function StaffPage() {
       <PageHeader
         title="Users & Staff Management"
         description="Manage staff directory and user accounts"
-        buttonText="Add User"
+        action={<AddUserModal />}  
       />
+
       <StatsCards stats={stats} />
       <FiltersBar
         filterLabel="Filter By Role"
@@ -30,7 +31,10 @@ export default function StaffPage() {
         ]}
         searchPlaceholder="Search..."
       />
-      <StaffTabs staffContent={<StaffList />} departmentContent={<div>Department management content here</div>} />
+      <StaffTabs
+        staffContent={<StaffList />}
+        departmentContent={<div>Department management content here</div>}
+      />
     </div>
   );
 }

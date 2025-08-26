@@ -3,6 +3,7 @@ import QueueTabs from "@/components/manager/patients/QueueTabs";
 import FiltersBar from "@/components/manager/staff/FiltersBar";
 import PageHeader from "@/components/manager/staff/PageHeader";
 import StatsCards from "@/components/manager/staff/StatsCard";
+import AddUserModal from "@/components/modals/AddUserModal";
 
 export default function QueuePage() {
   const stats = [
@@ -15,9 +16,9 @@ export default function QueuePage() {
   return (
     <div className="p-6">
       <PageHeader
-        title="Queue Management"
-        description="Manage patient queues and workloads"
-        buttonText="Add Queue"
+        title="Users & Staff Management"
+        description="Manage staff directory and user accounts"
+        action={<AddUserModal />}
       />
       <StatsCards stats={stats} />
       <FiltersBar
@@ -29,10 +30,7 @@ export default function QueuePage() {
         ]}
         searchPlaceholder="Search..."
       />
-      <QueueTabs 
-        unassignedContent={<QueueList />} 
-        allContent={<QueueList />} 
-      />
+      <QueueTabs unassignedContent={<QueueList />} allContent={<QueueList />} />
     </div>
   );
 }
