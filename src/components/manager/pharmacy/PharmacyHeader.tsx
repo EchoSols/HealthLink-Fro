@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import AddMedicationModal from "@/components/modals/AddMedicationModal";
 
 export default function PharmacyHeader() {
   return (
@@ -9,7 +9,8 @@ export default function PharmacyHeader() {
         <h1 className="text-2xl font-bold">Pharmacy Management</h1>
         <p className="text-muted-foreground">Manage medical inventory</p>
       </div>
-      <Button>Add medication</Button>
+    
+      <AddMedicationModal />
     </div>
   );
 }

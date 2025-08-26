@@ -3,6 +3,58 @@
 import { useState } from "react";
 import ReferralTable from "./ReferralTable";
 
+type Referral = {
+  date: string;
+  patient: string;
+  department: string;
+  specialist: string;
+  reason: string;
+  urgency: "Urgent" | "semi-urgent" | "normal";
+  status: string;
+};
+
+const outgoingReferrals: Referral[] = [
+  {
+    date: "2020-04-05",
+    patient: "Alice",
+    department: "Cardiology",
+    specialist: "Dr. Smith",
+    reason: "ECG follow-up",
+    urgency: "Urgent",
+    status: "completed",
+  },
+  {
+    date: "2020-04-06",
+    patient: "Bob",
+    department: "Orthopedics",
+    specialist: "Dr. Jane",
+    reason: "Fracture review",
+    urgency: "semi-urgent",
+    status: "pending",
+  },
+];
+
+const incomingReferrals: Referral[] = [
+  {
+    date: "2020-04-07",
+    patient: "Charlie",
+    department: "Neurology",
+    specialist: "Dr. John Doe",
+    reason: "Migraine diagnosis",
+    urgency: "normal",
+    status: "in progress",
+  },
+  {
+    date: "2020-04-08",
+    patient: "Diana",
+    department: "Pediatrics",
+    specialist: "Dr. Jane Roe",
+    reason: "Allergy consultation",
+    urgency: "Urgent",
+    status: "pending",
+  },
+];
+
 export default function ReferralTabs() {
   const [activeTab, setActiveTab] = useState<"Outgoing" | "Incoming">("Outgoing");
 
@@ -33,7 +85,11 @@ export default function ReferralTabs() {
       </div>
 
       {/* Tab Content */}
-      <ReferralTable />
+      {activeTab === "Outgoing" ? (
+        <ReferralTable data={outgoingReferrals} />
+      ) : (
+        <ReferralTable data={incomingReferrals} />
+      )}
     </div>
   );
 }

@@ -7,12 +7,24 @@ interface FiltersBarProps {
   filterLabel: string;
   filterOptions: { value: string; label: string }[];
   searchPlaceholder: string;
+  filterValue: string;
+  setFilterValue: (value: string) => void;
+  searchQuery: string;
+  setSearchQuery: (value: string) => void;
 }
 
-export default function FiltersBar({ filterLabel, filterOptions, searchPlaceholder }: FiltersBarProps) {
+export default function FiltersBar({
+  filterLabel,
+  filterOptions,
+  searchPlaceholder,
+  filterValue,
+  setFilterValue,
+  searchQuery,
+  setSearchQuery,
+}: FiltersBarProps) {
   return (
     <div className="flex justify-end gap-3 mb-6">
-      <Select>
+      <Select value={filterValue} onValueChange={setFilterValue}>
         <SelectTrigger className="w-40">
           <SelectValue placeholder={filterLabel} />
         </SelectTrigger>
@@ -24,7 +36,13 @@ export default function FiltersBar({ filterLabel, filterOptions, searchPlacehold
           ))}
         </SelectContent>
       </Select>
-      <Input placeholder={searchPlaceholder} className="w-64" />
+
+      <Input
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        placeholder={searchPlaceholder}
+        className="w-64"
+      />
     </div>
   );
 }
