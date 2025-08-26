@@ -32,7 +32,7 @@ export default function InventoryCard({
         <p><span className="font-medium">Status:</span> <span className="text-green-600">{status}</span></p>
         <p><span className="font-medium">Last Restocked:</span> {lastRestocked}</p>
         <div className="flex gap-2 mt-4">
-          <Button variant="outline">Edit</Button>
+          <Button variant="outline">Remove</Button>
           <Button>Re-Order</Button>
         </div>
       </CardContent>

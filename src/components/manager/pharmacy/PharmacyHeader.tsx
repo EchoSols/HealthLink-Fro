@@ -9,8 +9,7 @@ export default function PharmacyHeader() {
         <h1 className="text-2xl font-bold">Pharmacy Management</h1>
         <p className="text-muted-foreground">Manage medical inventory</p>
       </div>
-
-      {/* The button + modal are inside this component */}
+    
       <AddMedicationModal />
     </div>
   );
