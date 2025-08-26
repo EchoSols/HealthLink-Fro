@@ -1,7 +1,22 @@
 import PatientCard from "./PatientCard";
 
-export default function PatientQueueList() {
-  const patients = [
+type Patient = {
+  id: string;
+  name: string;
+  description: string;
+  serviceDate: string;
+  image: string;
+  urgent: boolean;
+};
+
+export default function PatientQueueList({
+  search,
+  selectedDate,
+}: {
+  search?: string;
+  selectedDate?: Date;
+}) {
+  const patients: Patient[] = [
     {
       id: "apt23056",
       name: "James Bond",
@@ -13,27 +28,45 @@ export default function PatientQueueList() {
     {
       id: "apt39244",
       name: "Tyres Gibson",
-      description: "Chest pain",
-      serviceDate: "2025-08-24",
+      description: "Headache",
+      serviceDate: "2025-08-25",
       image: "/man.png",
-      urgent: true,
+      urgent: false,
     },
     {
-      id: "apt23056",
+      id: "apt23057",
       name: "Jonathan Kuminga",
-      description: "Chest pain",
+      description: "Fever",
       serviceDate: "2025-08-24",
       image: "/man.png",
       urgent: true,
     },
   ];
 
+  // Filter patients
+  const filteredPatients = patients.filter((p) => {
+    const matchesSearch =
+      !search ||
+      p.name.toLowerCase().includes(search.toLowerCase()) ||
+      p.description.toLowerCase().includes(search.toLowerCase());
+
+    const matchesDate =
+      !selectedDate ||
+      new Date(p.serviceDate).toDateString() === selectedDate.toDateString();
+
+    return matchesSearch && matchesDate;
+  });
+
   return (
     <div className="space-y-4">
       <h3 className="text-base font-medium">Today</h3>
-      {patients.map((patient, idx) => (
-        <PatientCard key={idx} patient={patient} />
-      ))}
+      {filteredPatients.length > 0 ? (
+        filteredPatients.map((patient, idx) => (
+          <PatientCard key={idx} patient={patient} />
+        ))
+      ) : (
+        <p className="text-gray-500">No patients match your filters.</p>
+      )}
     </div>
   );
 }
