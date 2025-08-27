@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { Chatbot } from "@/components/patient/Chatbot";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -20,10 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${poppins.variable} antialiased`}
-      >
+      <body className={`${poppins.variable} antialiased`}>
         {children}
+        <Chatbot />
       </body>
     </html>
   );
