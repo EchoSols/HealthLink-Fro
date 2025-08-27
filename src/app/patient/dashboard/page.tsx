@@ -9,6 +9,7 @@ import { RecentVisitsCard } from "@/components/patient/dashboard/RecentVisitsCar
 import { UpcomingAppointmentCard } from "@/components/patient/dashboard/UpcomingAppointmentCard";
 import { NotificationsCard } from "@/components/patient/dashboard/NotificationsCard";
 import { RecentMedicationsCard } from "@/components/patient/dashboard/RecentMedicationsCard";
+import { Chatbot } from "@/components/patient/Chatbot";
 
 const DashboardPage = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -164,6 +165,7 @@ const DashboardPage = () => {
           </div>
         </div>
       </div>
+      <Chatbot />
     </div>
   );
 };
