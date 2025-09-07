@@ -37,8 +37,6 @@ const LoginForm = ({ apiUrl }: {apiUrl: string}) => {
     return;
   }
 
-  console.log("🔎 Fetching:", `${apiUrl}/auth/login`);
-
   try {
     const res = await fetch(`${apiUrl}/auth/login`, {
       method: "POST",
