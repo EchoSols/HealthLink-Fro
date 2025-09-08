@@ -1,11 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowRight } from "lucide-react";
-import { toast } from "react-toastify";
 
 interface LoginFormData {
   email: string;
@@ -14,7 +12,6 @@ interface LoginFormData {
 }
 
 const LoginForm = ({ apiUrl }: {apiUrl: string}) => {
-  const router = useRouter();
 
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
@@ -30,36 +27,28 @@ const LoginForm = ({ apiUrl }: {apiUrl: string}) => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-
-  if (!apiUrl) {
-    toast.error("API URL is missing.");
-    return;
-  }
-
-  try {
-    const res = await fetch(`${apiUrl}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(errorData.message || "Login failed");
-    }
-
-    const data = await res.json();
-    console.log("✅ Login successful:", data);
-
-    router.push(data.redirect || "/patient/dashboard");
-  } catch (error) {
-    console.error("❌ Error logging in:", error);
-    toast.error((error as Error).message || "Login failed");
-  }
-};
+      e.preventDefault();
+      console.log("Form submitted:", formData);
+      try {
+        const res = await fetch(`${apiUrl}/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+        const data = await res.json();
+        if (!data) {
+          console.log("Failed to fetch data");
+        }
+        const accessToken = localStorage.setItem("accessToken", data.accessToken);
+        console.log(accessToken);
+        console.log("Server response:", data);
+      } catch (error) {
+        console.error("Error occurred during form submission:", error);
+      }
+      window.location.href = "/patient/dashboard";
+    };
 
 
   return (
