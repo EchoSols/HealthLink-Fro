@@ -13,12 +13,12 @@ export default function Error({ error, reset }: ErrorProps) {
   return (
     <div className="min-h-screen bg-white flex flex-col justify-center items-center p-8">
       {/* Header */}
-      <div className="flex items-center space-x-2 mb-12">
+      {/* <div className="flex items-center space-x-2 mb-12">
         <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
           <Image src="/logo.svg" alt="HealthLink Logo" width={24} height={24} className="object-contain" />
         </div>
         <span className="text-blue-600 text-xl font-semibold">HealthLink</span>
-      </div>
+      </div> */}
 
       {/* Main Content */}
       <div className="text-center max-w-md">
