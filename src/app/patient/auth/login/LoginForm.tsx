@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface LoginFormData {
   email: string;
@@ -11,13 +12,15 @@ interface LoginFormData {
   rememberMe: boolean;
 }
 
-const LoginForm = ({ apiUrl }: {apiUrl: string}) => {
-
+const LoginForm = ({ apiUrl }: { apiUrl: string }) => {
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
     rememberMe: false,
   });
+
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleInputChange = (
     field: keyof LoginFormData,
@@ -27,29 +30,46 @@ const LoginForm = ({ apiUrl }: {apiUrl: string}) => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      console.log("Form submitted:", formData);
-      try {
-        const res = await fetch(`${apiUrl}/auth/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-        const data = await res.json();
-        if (!data) {
-          console.log("Failed to fetch data");
-        }
-        const accessToken = localStorage.setItem("accessToken", data.accessToken);
-        console.log(accessToken);
-        console.log("Server response:", data);
-      } catch (error) {
-        console.error("Error occurred during form submission:", error);
-      }
-      window.location.href = "/patient/dashboard";
-    };
+    e.preventDefault();
+    setLoading(true);
 
+    try {
+      const res = await fetch(`${apiUrl}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // important for cookies
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        throw new Error("Invalid email or password");
+      }
+
+      const data = await res.json();
+
+      // ✅ Secure handling:
+      // If backend sets HTTP-only cookies, no need to store token manually
+      if (data.accessToken) {
+        if (formData.rememberMe) {
+          localStorage.setItem("accessToken", data.accessToken);
+        } else {
+          sessionStorage.setItem("accessToken", data.accessToken);
+        }
+      }
+
+      console.log("Login successful:", data);
+
+      // Redirect to dashboard
+      router.push("/patient/dashboard");
+    } catch (error) {
+      console.error("Login error:", error);
+      alert(error instanceof Error ? error.message : "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex-1 lg:w-[70%] bg-white p-6 lg:p-12 flex items-center justify-center">
@@ -64,16 +84,13 @@ const LoginForm = ({ apiUrl }: {apiUrl: string}) => {
         </div>
 
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900">Get To DashBoard!</h2>
+          <h2 className="text-3xl font-bold text-gray-900">Get To Dashboard!</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Email */}
           <div>
-            <Label
-              htmlFor="email"
-              className="text-sm font-medium text-gray-700"
-            >
+            <Label htmlFor="email" className="text-sm font-medium text-gray-700">
               Email
             </Label>
             <Input
@@ -135,10 +152,11 @@ const LoginForm = ({ apiUrl }: {apiUrl: string}) => {
 
           <Button
             type="submit"
+            disabled={loading}
             className="w-full cursor-pointer bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold"
           >
-            LOGIN
-            <ArrowRight className="ml-2 w-5 h-5" />
+            {loading ? "Logging in..." : "LOGIN"}
+            {!loading && <ArrowRight className="ml-2 w-5 h-5" />}
           </Button>
         </form>
 

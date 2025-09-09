@@ -43,7 +43,8 @@ const RegisterForm = ({ apiUrl }: { apiUrl: string }) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
     try {
-      const res = await fetch(`${apiUrl}/patient/signup`, {
+      const res = await fetch(`${apiUrl}/auth/patient/signup
+`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
