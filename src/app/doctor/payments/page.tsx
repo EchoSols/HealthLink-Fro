@@ -14,8 +14,8 @@ export default function PaymentsPage() {
       <PaymentStats />
 
       {/* Filters */}
-      <div className="flex gap-2 mb-4">
-        <select className="border px-3 py-2 rounded text-sm">
+      <div className="flex gap-3 mb-6">
+        <select className="border px-3 py-2 rounded-md text-sm">
           <option>Filter Status</option>
           <option>Completed</option>
           <option>Pending</option>
@@ -23,17 +23,18 @@ export default function PaymentsPage() {
         <input
           type="text"
           placeholder="Search..."
-          className="border px-3 py-2 rounded text-sm"
+          className="border px-3 py-2 rounded-md text-sm"
         />
-        <button className="ml-auto bg-gray-100 border px-4 py-2 rounded text-sm">
+        <button className="ml-auto bg-gray-100 border px-4 py-2 rounded-md text-sm">
           Export Data
         </button>
       </div>
 
       {/* Tabs + Payments */}
-      <div className="bg-white shadow rounded-lg border p-4">
+      <div className="bg-white shadow-sm rounded-xl border border-gray-200 p-6">
         <PaymentTabs />
       </div>
     </div>
   );
 }
+

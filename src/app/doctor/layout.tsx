@@ -20,16 +20,18 @@ const DoctorLayout = ({ children }: { children: ReactNode }) => {
   // Default Doctor layout with Navbar + Sidebar
   return (
     <div className="h-screen flex flex-col">
-      <div className="fixed top-0 w-full"> 
+      <div className="fixed top-0 w-full z-50"> 
         <Navbar />
       </div>
 
-      <div className="flex flex-1 mt-0.5">
-        <div className="fixed left-0 bottom-0">
+      <div className="flex flex-1 pt-16">
+        <div className="fixed left-0 top-16 bottom-0 z-40">
           <Sidebar />
         </div>
-        <main className="ml-64 mt-12 flex-1 overflow-y-auto p-4">
-          {children}
+        <main className="ml-64 flex-1 overflow-y-auto p-6 bg-gray-50">
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
         </main>
       </div>
     </div>

@@ -15,13 +15,13 @@ import {
 
 const Navbar = () => {
   return (
-    <div className="fixed top-0 left-0 w-full shadow-sm px-4 py-3 bg-white flex items-center justify-between z-30">
-      <div className="flex gap-11 items-center">
-        <div className="flex items-center gap-2">
+    <div className="fixed top-0 left-0 w-full shadow-sm px-6 py-4 bg-white flex items-center justify-between z-30 border-b border-gray-100">
+      <div className="flex gap-12 items-center">
+        <div className="flex items-center gap-3">
           <Image src="/logo.svg" alt="Logo" width={35} height={35} />
           <div className="hidden sm:block">
-            <h1 className="font-semibold text-black">HealthLink</h1>
-            <p className="text-[#6B6B6B] text-xs">
+            <h1 className="font-semibold text-black text-lg">HealthLink</h1>
+            <p className="text-[#6B6B6B] text-xs mt-0.5">
               Your health care assistant
             </p>
           </div>
@@ -30,14 +30,14 @@ const Navbar = () => {
         <div className="hidden md:block">
           <Input
             type="text"
-            className="border border-gray-300 rounded-md p-2"
-            placeholder="Search..."
+            className="border border-gray-300 rounded-lg px-4 py-2 w-80 focus:ring-2 focus:ring-[#118CDB] focus:border-transparent"
+            placeholder="Search patients, appointments..."
           />
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
-        <div className="flex items-center space-x-2">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center space-x-3">
           <span className="text-lg font-bold">ᶾᴀ</span>
 
           <Select defaultValue="en">
@@ -53,9 +53,11 @@ const Navbar = () => {
           </Select>
         </div>
 
-        <BellDotIcon className="h-5 w-5" />
+        <div className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+          <BellDotIcon className="h-5 w-5 text-gray-600" />
+        </div>
 
-        <Avatar>
+        <Avatar className="h-9 w-9">
           <AvatarFallback className="flex items-center justify-center bg-[#118CDB] text-white font-semibold">
             I
           </AvatarFallback>

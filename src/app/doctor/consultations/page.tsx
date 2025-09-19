@@ -15,7 +15,7 @@ export default function ConsultationsPage() {
       <ConsultationStats />
 
       {/* Table */}
-      <div className="mt-6">
+      <div className="mt-6 bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
         <ConsultationTable />
       </div>
     </div>

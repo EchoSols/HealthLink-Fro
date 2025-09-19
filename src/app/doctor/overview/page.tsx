@@ -3,8 +3,6 @@ import TopQueue from "@/components/doctor/TopQueue";
 import NextInQueue from "@/components/doctor/NextQueue";
 import RecentNotifications from "@/components/doctor/RecentNotification";
 import CalendarCard from "@/components/doctor/CalendarCard";
-import Navbar from "@/components/doctor/Navbar";
-import Sidebar from "@/components/doctor/Sidebar";
 import { Chatbot } from "@/components/patient/Chatbot";
 
 const Page = () => {
@@ -16,35 +14,42 @@ const Page = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <div className="flex pt-20">
-        <Sidebar />
-        <main className="flex-1 p-6">
-          <h1 className="font-semibold text-2xl">Welcome back, John</h1>
-          <p className="text-gray-600">
-            Here&apos;s your health overview for today
-          </p>
-
-          <div className="flex gap-4">
-            {data.map((item, idx) => (
-              <div key={idx} className="flex-1">
-                <Card title={item.title} total={item.total} />
-              </div>
-            ))}
-          </div>
-
-          <div className="flex gap-4">
-            <TopQueue />
-            <NextInQueue />
-          </div>
-
-          <div className="flex gap-4">
-            <RecentNotifications />
-            <CalendarCard />
-          </div>
-        </main>
+    <div className="space-y-8">
+      {/* Header Section */}
+      <div className="mb-8">
+        <h1 className="font-semibold text-3xl text-gray-900 mb-2">Welcome back, John</h1>
+        <p className="text-gray-600 text-lg">
+          Here&apos;s your health overview for today
+        </p>
       </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {data.map((item, idx) => (
+          <Card key={idx} title={item.title} total={item.total} />
+        ))}
+      </div>
+
+      {/* Queue Section - Top Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div className="lg:col-span-2">
+          <TopQueue />
+        </div>
+        <div className="lg:col-span-1">
+          <NextInQueue />
+        </div>
+      </div>
+
+      {/* Notifications and Calendar - Bottom Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <RecentNotifications />
+        </div>
+        <div className="lg:col-span-1">
+          <CalendarCard />
+        </div>
+      </div>
+
       <Chatbot />
     </div>
   );

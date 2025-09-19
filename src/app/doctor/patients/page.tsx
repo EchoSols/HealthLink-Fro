@@ -13,7 +13,7 @@ export default function PatientQueuePage() {
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between gap-4 mb-6">
+      <div className="flex items-center justify-between gap-6 mb-6">
         <div>
           <h1 className="text-2xl font-semibold">View Patient Queues</h1>
           <p className="text-gray-500">Here&apos;s your patient queue overview</p>
@@ -22,9 +22,9 @@ export default function PatientQueuePage() {
         <Card total={12} title="Total in Queue" />
       </div>
 
-      <div className="rounded-lg border-2 border-gray-200 p-6 shadow-sm mt-5">
+      <div className="rounded-xl border border-gray-200 p-6 shadow-sm mt-2">
         {/* Queue Overview */}
-        <div className="flex items-center justify-between mb-5">
+        <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-lg font-medium">All queue</h2>
             <p className="text-sm text-[#404040]">Here are all your queue</p>
@@ -44,3 +44,4 @@ export default function PatientQueuePage() {
     </div>
   );
 }
+
